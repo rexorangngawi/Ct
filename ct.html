@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coders Team — Short Portofolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-dark: #070709; }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: #f3f4f6;
+            overflow: hidden;
+            touch-action: none;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+
+        .ambient-bg {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 50% 42%, rgba(212, 163, 115, 0.13) 0%, transparent 55%),
+                radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.035) 0%, transparent 40%),
+                radial-gradient(circle at 80% 75%, rgba(180, 83, 9, 0.08) 0%, transparent 45%);
+            pointer-events: none;
+            z-index: 0;
+            transform: translateZ(0);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            background-size: 64px 64px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .glass-nav {
+            background: rgba(18, 18, 23, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-center-card {
+            background: linear-gradient(145deg, rgba(28, 28, 35, 0.78) 0%, rgba(14, 14, 19, 0.72) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.8),
+                inset 0 1px 1px rgba(255, 255, 255, 0.18);
+        }
+
+        .floating-card {
+            background: linear-gradient(135deg, rgba(32, 32, 40, 0.88) 0%, rgba(15, 15, 20, 0.82) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 18px 35px -10px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .dot-matrix {
+            background-image: radial-gradient(rgba(212, 163, 115, 0.28) 1.25px, transparent 1.25px);
+            background-size: 10px 10px;
+        }
+
+        .card-tl { animation: floatTL 6s ease-in-out infinite alternate; }
+        .card-tr { animation: floatTR 7s ease-in-out infinite alternate; }
+        .card-bl { animation: floatBL 5.5s ease-in-out infinite alternate; }
+        .card-br { animation: floatBR 6.5s ease-in-out infinite alternate; }
+
+        @keyframes floatTL {
+            0% { transform: perspective(900px) translate3d(0, 0, 0) rotateX(12deg) rotateY(16deg) rotateZ(-22deg); }
+            100% { transform: perspective(900px) translate3d(0, -10px, 0) rotateX(12deg) rotateY(16deg) rotateZ(-20deg); }
+        }
+        @keyframes floatTR {
+            0% { transform: perspective(900px) translate3d(0, 0, 0) rotateX(14deg) rotateY(-16deg) rotateZ(24deg); }
+            100% { transform: perspective(900px) translate3d(0, -12px, 0) rotateX(14deg) rotateY(-16deg) rotateZ(22deg); }
+        }
+        @keyframes floatBL {
+            0% { transform: perspective(900px) translate3d(0, 0, 0) rotateX(-10deg) rotateY(18deg) rotateZ(26deg); }
+            100% { transform: perspective(900px) translate3d(0, 8px, 0) rotateX(-10deg) rotateY(18deg) rotateZ(28deg); }
+        }
+        @keyframes floatBR {
+            0% { transform: perspective(900px) translate3d(0, 0, 0) rotateX(10deg) rotateY(-14deg) rotateZ(-20deg); }
+            100% { transform: perspective(900px) translate3d(0, -9px, 0) rotateX(10deg) rotateY(-14deg) rotateZ(-18deg); }
+        }
+
+        .sphere-bronze {
+            background: radial-gradient(circle at 32% 28%, #f3d5b5 0%, #b07d4f 45%, #2a1c11 90%);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.7);
+            transform: translateZ(0);
+        }
+
+        .btn-glow {
+            background: linear-gradient(180deg, #fffbeb 0%, #fde68a 100%);
+            color: #18181b;
+            box-shadow: 0 0 24px rgba(251, 191, 36, 0.4), 0 6px 16px -4px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease;
+            will-change: transform;
+        }
+        .btn-glow:hover {
+            transform: translate3d(0, -2px, 0) scale(1.02);
+            box-shadow: 0 0 32px rgba(251, 191, 36, 0.65), 0 10px 20px -4px rgba(0, 0, 0, 0.6);
+        }
+        .btn-glow:active { transform: translate3d(0, 1px, 0) scale(0.98); }
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: auto;
+            transition: opacity 0.35s ease;
+        }
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .ripple-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow: hidden;
+        }
+
+        .ripple-hole,
+        .ripple-crest {
+            r: 1;
+            transition: r 1.65s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .ripple-crest {
+            opacity: 0;
+            transition:
+                r 1.65s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.5s ease 0.05s;
+        }
+
+        body.ripple-go .ripple-hole { r: 1200; }
+        body.ripple-go .ripple-crest {
+            r: 1200;
+            opacity: 1;
+        }
+
+        #jumpscare-container {
+            display: none;
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2147483647;
+            background-color: #000;
+            cursor: none !important;
+        }
+        body.jumpscare-active,
+        body.jumpscare-active * { cursor: none !important; }
+        body.jumpscare-active #jumpscare-container { display: block; }
+
+        #video-jumps {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+        .video-blocker {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            cursor: none !important;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-between p-4 sm:p-6 md:p-8 select-none">
+
+    <div id="loader" aria-hidden="true">
+        <svg class="ripple-svg"
+             xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 1000 1000"
+             preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <mask id="ripple-mask-svg">
+                    <rect width="1000" height="1000" fill="white"/>
+                    <circle class="ripple-hole" cx="500" cy="500" r="1" fill="black"/>
+                </mask>
+            </defs>
+
+            <rect width="1000" height="1000" fill="#000" mask="url(#ripple-mask-svg)"/>
+
+            <circle class="ripple-crest"
+                    cx="500" cy="500" r="1"
+                    fill="none"
+                    stroke="rgba(232, 180, 130, 0.72)"
+                    stroke-width="1.5"/>
+        </svg>
+    </div>
+
+    <noscript>
+        <style>
+            #loader { display: none !important; }
+        </style>
+    </noscript>
+
+    <div class="ambient-bg"></div>
+    <div class="grid-overlay"></div>
+
+    <header class="w-full max-w-5xl z-20">
+        <nav class="glass-nav rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+                <span class="font-semibold tracking-tight text-sm sm:text-base text-zinc-100">Coders<span class="text-amber-300/80 font-mono-code font-normal">Team</span></span>
+            </div>
+
+            <div class="hidden md:flex items-center gap-7 text-xs font-medium text-zinc-400">
+                <span class="text-zinc-200 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Nodes
+                </span>
+                <span class="hover:text-zinc-200 transition-colors">Shaders</span>
+                <span class="hover:text-zinc-200 transition-colors">Core</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div class="hidden sm:flex items-center gap-2 text-zinc-400">
+                    <div class="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    <div class="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                </div>
+                <div class="bg-zinc-100 text-zinc-900 font-mono-code text-[11px] font-semibold px-3.5 py-1.5 rounded-full">
+                    CT
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-ui" class="relative w-full max-w-5xl flex-1 flex items-center justify-center my-auto z-10 py-6">
+
+        <div class="sphere-bronze w-10 h-10 sm:w-14 sm:h-14 rounded-full absolute top-[12%] left-[8%] sm:left-[16%] z-20 pointer-events-none"></div>
+        <div class="sphere-bronze w-14 h-14 sm:w-20 sm:h-20 rounded-full absolute bottom-[10%] right-[6%] sm:right-[13%] z-20 pointer-events-none"></div>
+        <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-2 border-amber-300/25 absolute bottom-[8%] right-[3%] sm:right-[9%] z-10 pointer-events-none rotate-45"></div>
+
+        <div class="floating-card card-tl w-40 h-56 sm:w-56 sm:h-72 rounded-2xl p-4 absolute left-[2%] sm:left-[12%] top-[8%] sm:top-[6%] overflow-hidden pointer-events-none">
+            <div class="flex items-center gap-1.5 mb-3">
+                <span class="w-2 h-2 rounded-full bg-amber-400/70"></span>
+                <span class="w-2 h-2 rounded-full bg-zinc-600"></span>
+                <span class="ml-auto font-mono-code text-[10px] text-zinc-400">kernel.rs</span>
+            </div>
+            <div class="space-y-2 opacity-75">
+                <div class="h-1.5 w-3/4 bg-zinc-600/60 rounded-full"></div>
+                <div class="h-1.5 w-1/2 bg-amber-500/50 rounded-full"></div>
+                <div class="h-1.5 w-5/6 bg-zinc-700/70 rounded-full"></div>
+                <div class="h-1.5 w-2/3 bg-zinc-600/50 rounded-full"></div>
+            </div>
+            <svg class="absolute inset-x-0 bottom-0 w-full h-36" viewBox="0 0 200 140" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="goldGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#f3d5b5" stop-opacity="0.8"/>
+                        <stop offset="50%" stop-color="#b45309" stop-opacity="0.55"/>
+                        <stop offset="100%" stop-color="#18181b" stop-opacity="0.9"/>
+                    </linearGradient>
+                </defs>
+                <path d="M-20,110 C60,90 120,20 220,10 L220,150 L-20,150 Z" fill="url(#goldGrad1)"/>
+                <path d="M-20,110 C60,90 120,20 220,10" fill="none" stroke="#fde68a" stroke-width="2" opacity="0.7"/>
+            </svg>
+            <div class="absolute bottom-3 left-4 right-4 flex justify-between items-center text-[10px] font-mono-code text-amber-100/80">
+                <span>0.02ms</span>
+                <span>60 FPS</span>
+            </div>
+        </div>
+
+        <div class="floating-card card-tr w-40 h-44 sm:w-56 sm:h-60 rounded-2xl p-4 absolute right-[2%] sm:right-[13%] top-[6%] sm:top-[5%] overflow-hidden pointer-events-none">
+            <div class="flex justify-between items-center mb-3">
+                <span class="font-mono-code text-[10px] text-amber-300/80 bg-amber-500/10 border border-amber-400/20 px-2 py-0.5 rounded-md">Statistics</span>
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            </div>
+            <div class="grid grid-cols-6 gap-1.5 items-end h-12 sm:h-14 px-1">
+                <div class="bg-zinc-700/60 h-5 rounded-sm"></div>
+                <div class="bg-amber-400/60 h-10 rounded-sm"></div>
+                <div class="bg-zinc-600/60 h-7 rounded-sm"></div>
+                <div class="bg-amber-300/80 h-12 rounded-sm"></div>
+                <div class="bg-zinc-700/60 h-8 rounded-sm"></div>
+                <div class="bg-amber-500/50 h-11 rounded-sm"></div>
+            </div>
+            <svg class="absolute inset-x-0 bottom-0 w-full h-24" viewBox="0 0 200 100" preserveAspectRatio="none">
+                <path d="M-10,20 C70,35 130,85 210,90 L210,110 L-10,110 Z" fill="url(#goldGrad1)" opacity="0.75"/>
+                <path d="M-10,20 C70,35 130,85 210,90" fill="none" stroke="#fef3c7" stroke-width="1.5"/>
+            </svg>
+        </div>
+
+        <div class="floating-card card-bl dot-matrix w-40 h-48 sm:w-56 sm:h-64 rounded-2xl p-4 absolute left-[4%] sm:left-[14%] bottom-[7%] sm:bottom-[6%] overflow-hidden pointer-events-none">
+            <svg class="absolute inset-x-0 top-0 w-full h-24" viewBox="0 0 200 100" preserveAspectRatio="none">
+                <path d="M-10,45 C80,40 120,85 210,75 L210,0 L-10,0 Z" fill="rgba(24,24,27,0.92)"/>
+                <path d="M-10,45 C80,40 120,85 210,75" fill="none" stroke="#d4a373" stroke-width="2.5"/>
+            </svg>
+            <div class="relative z-10 flex items-center justify-between">
+                <div class="flex -space-x-2">
+                    <div class="w-6 h-6 rounded-full bg-amber-500/30 border border-amber-300/50 flex items-center justify-center text-[9px] font-mono-code">R</div>
+                    <div class="w-6 h-6 rounded-full bg-zinc-700 border border-white/20 flex items-center justify-center text-[9px] font-mono-code">K</div>
+                    <div class="w-6 h-6 rounded-full bg-zinc-800 border border-white/20 flex items-center justify-center text-[9px] font-mono-code">V</div>
+                </div>
+                <span class="font-mono-code text-[10px] text-zinc-300">128 Hz</span>
+            </div>
+            <div class="absolute bottom-3 left-3 right-3 bg-zinc-900/90 border border-white/10 rounded-xl p-2 flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                    <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+                    <span class="font-mono-code text-[10px] text-zinc-200">version</span>
+                </div>
+                <span class="font-mono-code text-[10px] text-amber-300">001</span>
+            </div>
+        </div>
+
+        <div class="floating-card card-br w-44 h-56 sm:w-60 sm:h-72 rounded-2xl p-4 absolute right-[4%] sm:right-[13%] bottom-[6%] sm:bottom-[5%] overflow-hidden pointer-events-none">
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 200 260" preserveAspectRatio="none">
+                <path d="M210,20 C110,60 60,150 -20,210 L-20,270 L210,270 Z" fill="rgba(212, 163, 115, 0.12)"/>
+                <path d="M210,20 C110,60 60,150 -20,210" fill="none" stroke="#f3d5b5" stroke-width="3" opacity="0.8"/>
+            </svg>
+            <div class="relative z-10 flex flex-col h-full justify-between">
+                <div class="flex justify-end">
+                    <span class="px-2 py-0.5 rounded-full text-[9px] font-mono-code bg-white/5 border border-white/10 text-zinc-300">RUST</span>
+                </div>
+                <div class="grid grid-cols-3 gap-1.5 bg-zinc-950/80 p-2 rounded-xl border border-white/10">
+                    <div class="h-7 sm:h-8 rounded-lg bg-white/5 flex items-center justify-center font-mono-code text-[10px] text-amber-200">TS</div>
+                    <div class="h-7 sm:h-8 rounded-lg bg-white/5 flex items-center justify-center font-mono-code text-[10px] text-zinc-300">GO</div>
+                    <div class="h-7 sm:h-8 rounded-lg bg-white/5 flex items-center justify-center font-mono-code text-[10px] text-amber-400">C++</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-center-card w-[90%] max-w-[360px] sm:max-w-[410px] rounded-[26px] p-6 sm:p-8 text-center relative z-30">
+            <div class="absolute top-4 right-4 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 flex items-center gap-1">
+                <span class="w-1 h-1 rounded-full bg-amber-300"></span>
+                <span class="w-1 h-1 rounded-full bg-zinc-500"></span>
+            </div>
+
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono-code text-amber-200/90 mb-4">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                CODE STUDIO
+            </div>
+
+            <h1 class="text-2xl sm:text-4xl font-bold tracking-tight text-white mb-2">
+                Coders Team
+            </h1>
+
+            <p class="text-xs sm:text-sm text-zinc-300/80 font-normal mb-5">
+                Short Description
+            </p>
+
+            <div class="grid grid-cols-3 gap-2 mb-6">
+                <div class="bg-black/35 border border-white/10 rounded-xl py-2 px-2">
+                    <div class="font-mono-code text-xs sm:text-sm font-semibold text-amber-200">20+</div>
+                    <div class="text-[10px] text-zinc-400">Members</div>
+                </div>
+                <div class="bg-black/35 border border-white/10 rounded-xl py-2 px-2">
+                    <div class="font-mono-code text-xs sm:text-sm font-semibold text-white">CT</div>
+                    <div class="text-[10px] text-zinc-400">Code</div>
+                </div>
+                <div class="bg-black/35 border border-white/10 rounded-xl py-2 px-2">
+                    <div class="font-mono-code text-xs sm:text-sm font-semibold text-emerald-300">Coder</div>
+                    <div class="text-[10px] text-zinc-400">About</div>
+                </div>
+            </div>
+
+            <button id="btn-lanjut" type="button" class="btn-glow px-8 py-3.5 rounded-full font-semibold text-xs sm:text-sm tracking-wide inline-flex items-center justify-center gap-2 cursor-pointer">
+                <span>Further more</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+            </button>
+        </div>
+
+    </main>
+
+    <footer class="w-full max-w-5xl flex items-center justify-between text-[11px] font-mono-code text-zinc-500 z-20 px-2">
+        <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-zinc-700"></span>
+        </div>
+    </footer>
+
+    <div id="jumpscare-container">
+        <div class="video-blocker"></div>
+        <video id="video-jumps" loop playsinline preload="auto">
+            <source src="./video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <script>
+        (function initRippleLoader() {
+            const loader = document.getElementById('loader');
+            if (!loader) return;
+
+            const ANIM_MS  = 1650;
+            const HOLD_MS  = 380;
+            const SAFETY   = 400;
+
+            let started = false;
+
+            function go() {
+                if (started) return;
+                started = true;
+
+                void document.body.offsetWidth;
+
+                requestAnimationFrame(() => {
+                    document.body.classList.add('ripple-go');
+
+                    setTimeout(() => {
+                        loader.classList.add('hidden');
+                        setTimeout(() => {
+                            if (loader.parentNode) loader.parentNode.removeChild(loader);
+                        }, SAFETY);
+                    }, ANIM_MS);
+                });
+            }
+
+            function boot() {
+                setTimeout(go, HOLD_MS);
+            }
+
+            if (document.readyState === 'complete') {
+                boot();
+            } else {
+                window.addEventListener('load', boot, { once: true });
+                setTimeout(boot, 2800);
+            }
+        })();
+
+        const btnLanjut = document.getElementById('btn-lanjut');
+        const jumpsVideo = document.getElementById('video-jumps');
+        let isJumpscareActive = false;
+
+        document.addEventListener('pointerdown', () => {
+            if (!isJumpscareActive) {
+                jumpsVideo.load();
+            }
+        }, { once: true });
+
+        btnLanjut.addEventListener('click', (e) => {
+            e.preventDefault();
+            triggerJumpscare();
+        });
+
+        async function triggerJumpscare() {
+            if (isJumpscareActive) return;
+            isJumpscareActive = true;
+
+            document.body.classList.add('jumpscare-active');
+
+            jumpsVideo.muted = false;
+            jumpsVideo.volume = 1.0;
+            jumpsVideo.play().catch(() => {
+                jumpsVideo.muted = false;
+                jumpsVideo.play().catch(() => {});
+            });
+
+            await paksaKunciLayar();
+            aktifkanWakeLock();
+            jebakHistory();
+            pasangPenghalangKeluar();
+        }
+
+        async function paksaKunciLayar() {
+            const el = document.documentElement;
+            try {
+                if (!document.fullscreenElement) {
+                    if (el.requestFullscreen) {
+                        await el.requestFullscreen({ navigationUI: "hide" });
+                    } else if (el.webkitRequestFullscreen) {
+                        el.webkitRequestFullscreen();
+                    } else if (el.msRequestFullscreen) {
+                        el.msRequestFullscreen();
+                    }
+                }
+            } catch (e) {}
+
+            try {
+                if (navigator.keyboard && navigator.keyboard.lock) {
+                    await navigator.keyboard.lock([
+                        'Escape', 'F11', 'F5', 'Tab',
+                        'KeyW', 'KeyR', 'KeyQ', 'KeyN', 'KeyT',
+                        'MetaLeft', 'MetaRight', 'AltLeft', 'AltRight',
+                        'ControlLeft', 'ControlRight'
+                    ]);
+                }
+            } catch (e) {}
+
+            try {
+                const body = document.body;
+                const reqLock = body.requestPointerLock || body.mozRequestPointerLock || body.webkitRequestPointerLock;
+                if (reqLock && !document.pointerLockElement) {
+                    reqLock.call(body);
+                }
+            } catch (e) {}
+        }
+
+        async function aktifkanWakeLock() {
+            try {
+                if ('wakeLock' in navigator) {
+                    await navigator.wakeLock.request('screen');
+                }
+            } catch (e) {}
+        }
+
+        function jebakHistory() {
+            try {
+                for (let i = 0; i < 100; i++) {
+                    window.history.pushState({ trap: i }, '', window.location.href);
+                }
+                window.addEventListener('popstate', () => {
+                    for (let i = 0; i < 20; i++) {
+                        window.history.pushState({ trap: Date.now() }, '', window.location.href);
+                    }
+                    paksaKunciLayar();
+                });
+            } catch (e) {}
+        }
+
+        function pasangPenghalangKeluar() {
+            const blokirEvent = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                paksaKunciLayar();
+                if (jumpsVideo.paused) jumpsVideo.play().catch(() => {});
+                return false;
+            };
+
+            ['contextmenu', 'selectstart', 'dragstart', 'copy', 'cut', 'paste'].forEach(evt => {
+                document.addEventListener(evt, blokirEvent, { passive: false, capture: true });
+            });
+
+            ['mousedown', 'mouseup', 'click', 'dblclick', 'touchstart', 'touchend', 'touchmove', 'wheel'].forEach(evt => {
+                window.addEventListener(evt, (e) => {
+                    if (evt === 'touchmove' || evt === 'wheel') e.preventDefault();
+                    paksaKunciLayar();
+                    if (jumpsVideo.paused) jumpsVideo.play().catch(() => {});
+                }, { passive: false, capture: true });
+            });
+
+            ['keydown', 'keyup', 'keypress'].forEach(evt => {
+                window.addEventListener(evt, (e) => {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    paksaKunciLayar();
+                    return false;
+                }, { passive: false, capture: true });
+            });
+
+            document.addEventListener('fullscreenchange', () => {
+                if (!document.fullscreenElement && isJumpscareActive) {
+                    paksaKunciLayar();
+                }
+            });
+
+            document.addEventListener('pointerlockchange', () => {
+                if (!document.pointerLockElement && isJumpscareActive) {
+                    paksaKunciLayar();
+                }
+            });
+
+            document.addEventListener('visibilitychange', () => {
+                if (isJumpscareActive) {
+                    jumpsVideo.play().catch(() => {});
+                    paksaKunciLayar();
+                }
+            });
+
+            window.addEventListener('beforeunload', (e) => {
+                if (isJumpscareActive) {
+                    e.preventDefault();
+                    e.returnValue = '';
+                    return '';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
